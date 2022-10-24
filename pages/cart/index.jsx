@@ -1,14 +1,16 @@
 import Head from "next/head";
 import Router from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const Cart = () => {
   const user = useSelector((state) => state.auth.user);
 
-  if (!user) {
-    Router.push("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      Router.push("/login");
+    }
+  }, [user]);
 
   return (
     <>
