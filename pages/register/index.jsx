@@ -1,46 +1,40 @@
-import React, { useEffect, useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { login } from "../../firebase";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import React, { useRef } from "react";
+import { register } from "../../firebase";
 
-const Login = () => {
-  const user = useSelector((state) => state.auth.user);
+const Register = () => {
   const router = useRouter();
 
+  const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
   const handlerFormSubmit = async (e) => {
     e.preventDefault();
 
+    const full_name = nameInputRef.current.value;
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
 
-    await login(email, password);
+    await register(full_name, email, password);
+    router.push("/");
   };
-
-  useEffect(() => {
-    if (user) {
-      router.push("/");
-    }
-  }, [user, router]);
-
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Register</title>
       </Head>
 
-      <div className="w-3/5 mx-auto h-[350px] mt-20 flex">
-        <div className="w-1/2 bg-login-section bg-cover bg-center bg-no-repeat"></div>
+      <div className="w-3/5 mx-auto h-[400px] mt-20 flex">
+        <div className="w-1/2 bg-register-section bg-cover bg-center bg-no-repeat"></div>
         <div className="w-1/2 bg-color-black text-color-white">
-          <h1 className="text-center  text-[28px] font-bold capitalize mt-3">
-            login
+          <h1 className="text-center text-[28px] font-bold capitalize mt-3">
+            Register
           </h1>
           <p className="text-center text-xs mt-1">
-            Enter login details to get access
+            Register to take advantage!
           </p>
 
           <div className="w-3/4 mx-auto mt-5">
@@ -48,6 +42,13 @@ const Login = () => {
               className="flex flex-col gap-y-5"
               onSubmit={handlerFormSubmit}
             >
+              <input
+                ref={nameInputRef}
+                required
+                type="text"
+                placeholder="Enter full name"
+                className="w-full h-10 outline-none focus:outline-none text-color-black border-2 px-2 border-gray-400 placeholder-gray-500"
+              />
               <input
                 ref={emailInputRef}
                 required
@@ -67,13 +68,13 @@ const Login = () => {
                   type="submit"
                   className="px-6 py-2  font-semibold text-lg bg-color-secondary"
                 >
-                  Login
+                  Register
                 </button>
                 <p className="text-xs mt-8">
-                  Don't have an account?
-                  <Link href="/register">
+                  Have an account?
+                  <Link href="/login">
                     <a className="text-color-secondary ml-1 transition-all hover:underline font-medium">
-                      Register
+                      Login
                     </a>
                   </Link>
                 </p>
@@ -86,4 +87,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

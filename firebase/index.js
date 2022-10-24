@@ -4,21 +4,26 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { setDoc, doc, getFirestore } from "firebase/firestore";
+
 import { setUserHandler } from "../utils";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCQ2OqUfB6Fre0hOawwsc8zFAePZX8Z5hE",
-  authDomain: "sofa-furniture-ecommerce.firebaseapp.com",
-  projectId: "sofa-furniture-ecommerce",
-  storageBucket: "sofa-furniture-ecommerce.appspot.com",
-  messagingSenderId: "297658554450",
-  appId: "1:297658554450:web:ec5e14a212e7f098f2678b",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 onAuthStateChanged(auth, (user) => {
   console.log(user);
@@ -46,6 +51,39 @@ export const login = async (email, password) => {
 export const logout = async () => {
   try {
     await signOut(auth);
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+export const register = async (full_name, email, password) => {
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log(response);
+
+    if (response.user) {
+      await setDoc(doc(db, "emails", email), {
+        uid: response.user.uid,
+      });
+
+      await setDoc(doc(db, "users", response.user.uid), {
+        full_name,
+        email,
+        password,
+        username: "",
+      });
+
+      await updateProfile(auth.currentUser, {
+        displayName: full_name,
+      });
+
+      console.log(response.user);
+      return response.user;
+    }
   } catch (error) {
     alert(error.message);
   }
