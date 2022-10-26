@@ -5,7 +5,8 @@ import product1 from "../public/product-1.png";
 import product2 from "../public/product-2.png";
 import product3 from "../public/product-3.png";
 
-const BestSellersSection = () => {
+const BestSellersSection = ({ products }) => {
+  console.log(products);
   return (
     <>
       <section className="w-full h-full bg-color-white pt-25">
@@ -44,50 +45,21 @@ const BestSellersSection = () => {
           </div>
 
           <div className="grid grid-cols-3 gap-16 mt-6">
-            <div>
-              <Link href="#">
-                <a>
-                  <Image src={product1} width={375} height={250} />
-                  <h2 className="text-lg text-center text-color-primary py-2">
-                    Perfect, amazing and awesome product. This is absolutely
-                    amazing.
-                  </h2>
-                  <p className="text-2xl text-center text-color-secondary font-semibold">
-                    $540
-                  </p>
-                </a>
-              </Link>
-            </div>
-
-            <div>
-              <Link href="#">
-                <a>
-                  <Image src={product2} width={375} height={250} />
-                  <h2 className="text-lg text-center text-color-primary py-2">
-                    Perfect, amazing and awesome product. This is absolutely
-                    amazing.
-                  </h2>
-                  <p className="pt-2 text-2xl text-center text-color-secondary font-semibold">
-                    $672
-                  </p>
-                </a>
-              </Link>
-            </div>
-
-            <div>
-              <Link href="#">
-                <a>
-                  <Image src={product3} width={375} height={250} />
-                  <h2 className="text-lg text-center text-color-primary py-2">
-                    Perfect, amazing and awesome product. This is absolutely
-                    amazing.
-                  </h2>
-                  <p className="pt-2  text-2xl text-center text-color-secondary font-semibold">
-                    $489
-                  </p>
-                </a>
-              </Link>
-            </div>
+            {products.map((item) => (
+              <div key={item.id}>
+                <Link href={`/product/${item.id}`}>
+                  <a>
+                    <Image src={product2} width={375} height={250} />
+                    <h2 className="text-lg text-center text-color-primary py-2">
+                      {item.title}
+                    </h2>
+                    <p className="pt-2 text-2xl text-center text-color-secondary font-semibold">
+                      ${item.price}
+                    </p>
+                  </a>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>

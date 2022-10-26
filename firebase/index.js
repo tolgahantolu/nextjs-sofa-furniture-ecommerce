@@ -7,7 +7,14 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { setDoc, doc, getFirestore } from "firebase/firestore";
+import {
+  setDoc,
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 import { setUserHandler } from "../utils";
 
@@ -86,5 +93,29 @@ export const register = async (full_name, email, password) => {
     }
   } catch (error) {
     alert(error.message);
+  }
+};
+
+export const getProductsData = async () => {
+  let productsArr = [];
+  const querySnap = await getDocs(collection(db, "products"));
+  querySnap.forEach((doc) => {
+    productsArr.push({ id: doc.id, ...doc.data() });
+  });
+  return productsArr;
+};
+
+export const getProductDetailsData = async (pid) => {
+  try {
+    const docRef = doc(db, "products", pid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return console.log("Data Fetching Failed :( ");
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 };
