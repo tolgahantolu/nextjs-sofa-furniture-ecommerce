@@ -25,7 +25,7 @@ const Cart = () => {
       </Head>
 
       {user && (
-        <div className="w-11/12 mt-20 pb-20 mx-auto">
+        <div className="w-11/12 h-full mt-20 mx-auto">
           <Link href="/products">
             <a className="inline-flex gap-x-px items-center text-sm font-semibold">
               <span className="text-lg">

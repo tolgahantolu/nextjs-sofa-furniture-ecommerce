@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import product1 from "../../public/product-1.png";
 import product2 from "../../public/product-2.png";
+import product3 from "../../public/product-3.png";
 import { getProductDetailsData } from "../../firebase/index";
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineHeart } from "react-icons/ai";
 
@@ -18,7 +20,7 @@ const ProductDetails = ({ id }) => {
 
   return (
     <div className="w-11/12 h-full mt-20 pb-20 mx-auto flex">
-      <div className="w-2/4 px-5 py-10 flex justify-center ">
+      <div className="w-2/4 px-5 py-10 flex justify-center">
         <div>
           <Image
             src={product2}
@@ -28,7 +30,7 @@ const ProductDetails = ({ id }) => {
           />
           <div className="flex justify-between items-center">
             <Image
-              src={product2}
+              src={product1}
               width={150}
               height={75}
               className="object-center object-cover"
@@ -40,7 +42,7 @@ const ProductDetails = ({ id }) => {
               className="object-center object-cover"
             />
             <Image
-              src={product2}
+              src={product3}
               width={150}
               height={75}
               className="object-center object-cover"
@@ -48,6 +50,7 @@ const ProductDetails = ({ id }) => {
           </div>
         </div>
       </div>
+
       <div className="w-2/4 px-5 py-10 text-color-black ">
         <div className="font-bold">
           <h1 className="text-2xl leading-7">{productDetails.title}</h1>
@@ -71,26 +74,28 @@ const ProductDetails = ({ id }) => {
 
         <p className="opacity-75 leading-[22px]">{productDetails.desc}</p>
 
-        <div className="mt-10 mb-6 inline-block w-50 h-auto bg-red-600">
-          <span>
-            <AiOutlineMinus />
-          </span>
-          <input
-            type="text"
-            value="1"
-            max="10"
-            min="0"
-            className="bg-transparent"
-          />
-          <span>
-            <AiOutlinePlus />
-          </span>
+        <div className="mt-10 mb-6 inline-block">
+          <div className="flex items-center justify-between w-30 border border-slate-300 py-4 px-2 rounded-full">
+            <button type="button" className="text-lg">
+              <AiOutlineMinus />
+            </button>
+            <input
+              type="text"
+              value="1"
+              max="10"
+              min="0"
+              className="bg-transparent text-center outline-none border-none w-10 text-xl"
+            />
+            <button type="button" className="text-lg">
+              <AiOutlinePlus />
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center gap-x-4">
           <button
             type="button"
-            className="uppercase text-lg bg-color-secondary text-color-white font-semibold px-10 py-4 "
+            className="uppercase text-lg bg-color-secondary text-color-white font-semibold px-10 py-4"
           >
             Add To Cart
           </button>

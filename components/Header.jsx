@@ -40,27 +40,27 @@ const Header = () => {
       <nav className="pl-50 flex-1">
         <ul className="flex gap-x-6 font-medium text-color-primary text-lg">
           <li className="transition duration-300 hover:text-color-secondary">
-            <Link href="#">
+            <Link href="/">
               <a className="capitalize">home</a>
             </Link>
           </li>
           <li className="transition duration-300 hover:text-color-secondary">
-            <Link href="#">
+            <Link href="/products">
               <a className="capitalize">products</a>
             </Link>
           </li>
           <li className="transition duration-300 hover:text-color-secondary">
-            <Link href="#">
+            <Link href="/">
               <a className="capitalize">blog</a>
             </Link>
           </li>
           <li className="transition duration-300 hover:text-color-secondary">
-            <Link href="#">
+            <Link href="/">
               <a className="capitalize">about</a>
             </Link>
           </li>
           <li className="transition duration-300 hover:text-color-secondary">
-            <Link href="#">
+            <Link href="/">
               <a className="capitalize">contact</a>
             </Link>
           </li>

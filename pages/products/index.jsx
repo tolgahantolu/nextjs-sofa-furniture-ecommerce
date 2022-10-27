@@ -1,15 +1,16 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
+import { getProductsData } from "../../firebase";
 
-const BestSellersSection = ({ products }) => {
+const Products = ({ products }) => {
   console.log(products);
   return (
     <>
-      <section className="w-full h-full bg-color-white pt-25">
+      <div className="w-11/12 my-20 mx-auto">
         <div className="text-center">
           <h2 className="uppercase font-bold text-4xl mb-5 text-color-primary">
-            best sellers
+            products
           </h2>
           <p className="text-gray-500 text-lg max-w-screen-md mx-auto">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates
@@ -40,26 +41,26 @@ const BestSellersSection = ({ products }) => {
               </li>
             </ul>
           </div>
-
-          <div className="grid grid-cols-3 gap-16 mt-6">
-            {products.map((item) => (
-              <div key={item.id}>
-                <Link href={`/product/${item.id}`}>
-                  <a>
-                    <Image src={item.image} width={375} height={250} />
-                    <h2 className="text-lg text-center text-color-primary py-2">
-                      {item.title}
-                    </h2>
-                    <p className="pt-2 text-2xl text-center text-color-secondary font-semibold">
-                      ${item.price}
-                    </p>
-                  </a>
-                </Link>
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
+
+        <div className="grid gap-16 grid-cols-3 mt-6">
+          {products.map((item) => (
+            <div key={item.id}>
+              <Link href={`/product/${item.id}`}>
+                <a>
+                  <Image src={item.image} width={375} height={250} />
+                  <h2 className="text-lg text-center text-color-primary py-2">
+                    {item.title}
+                  </h2>
+                  <p className="pt-2 text-2xl text-center text-color-secondary font-semibold">
+                    ${item.price}
+                  </p>
+                </a>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <style jsx>{`
         .best-sellers-tab::after {
@@ -80,4 +81,14 @@ const BestSellersSection = ({ products }) => {
   );
 };
 
-export default BestSellersSection;
+export default Products;
+
+export const getStaticProps = async () => {
+  const products = await getProductsData();
+
+  return {
+    props: {
+      products,
+    },
+  };
+};
